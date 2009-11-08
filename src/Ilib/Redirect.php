@@ -48,7 +48,7 @@
  * if (isset($_POST['submit'])) {
  *     // save something
  *     // optional parameter
- *     $redirect->setParameter("add_contact_id", $added_id); // Denne sætter parameter som skal sendes tilbage til siden. Den sendes dog kun tilbage hvis askParameter er sat ved opstart af redirect. Hvis ask er sat til multiple, sï¿½ gemmes der en ny hver gang den aktiveres, hvis ikke, overskrives den
+ *     $redirect->setParameter("add_contact_id", $added_id); // Denne sï¿½tter parameter som skal sendes tilbage til siden. Den sendes dog kun tilbage hvis askParameter er sat ved opstart af redirect. Hvis ask er sat til multiple, sï¿½ gemmes der en ny hver gang den aktiveres, hvis ikke, overskrives den
  *
  *     // the redirect
  *     $standard_page_without_redirect = 'standard.php';
@@ -161,7 +161,7 @@ class Ilib_Redirect
      * Returns the uri to current file
      *
      * @access private (is public to be able to test it)
-     * 
+     *
      * @return string
      */
     public function thisUri()
@@ -169,7 +169,7 @@ class Ilib_Redirect
         if (!empty($_SERVER['HTTPS'])) {
             $protocol= 'https://';
         } else {
-            $protocol = 'http://';       
+            $protocol = 'http://';
         }
         return $protocol. $_SERVER['HTTP_HOST'] . self::getRequestUri();
     }
@@ -305,17 +305,17 @@ class Ilib_Redirect
         // notice: theese are both parsed here and in construnctor
         $query_variable = 'redirect_id';
         if (!empty($options['query_variable'])) {
-            $query_variable = $options['query_variable'];   
+            $query_variable = $options['query_variable'];
         }
         $query_return_variable = 'return_redirect_id';
         if (!empty($options['query_return_variable'])) {
-            $query_return_variable = $options['query_return_variable'];   
+            $query_return_variable = $options['query_return_variable'];
         }
 
         $reset = false;
         $id = 0;
         if ($type == 'go') {
-            // Vi starter en ny redirect på siden, derfor skal vi ikke her slette eksisterende redirects til denne side.
+            // Vi starter en ny redirect pï¿½ siden, derfor skal vi ikke her slette eksisterende redirects til denne side.
             $id = 0;
         } else {
             if (($type == 'receive' && isset($_GET[$query_variable]))) {
@@ -324,10 +324,10 @@ class Ilib_Redirect
                 $id = intval($_GET[$query_variable]);
 
             } elseif ($type == 'return' && isset($_GET[$query_return_variable])) {
-                // Vi returnerer med en værdi. Der kan være en eksisterende redirect til denne side, som vi skal benytte igen. Vi sletter ikke andre redirects.
+                // Vi returnerer med en vï¿½rdi. Der kan vï¿½re en eksisterende redirect til denne side, som vi skal benytte igen. Vi sletter ikke andre redirects.
                 $id = intval($_GET[$query_return_variable]);
             } elseif (self::getRefererUrl()) {
-                // Vi arbejder inden for samme side. Vi finder forhåbentligt en redirect. Under alle omstændigheder sletter vi hvad vi ikke skal bruge.
+                // Vi arbejder inden for samme side. Vi finder forhï¿½bentligt en redirect. Under alle omstï¿½ndigheder sletter vi hvad vi ikke skal bruge.
                 $reset = true;
 
                 $url_parts = explode("?", self::getRefererUrl());
@@ -338,7 +338,7 @@ class Ilib_Redirect
                 // print($this_uri.' == '.$url_parts[0]);
                 if ($this_uri == $url_parts[0]) {
                     // print("c");
-                    // Vi arbejder inden for den samme side, så finder vi id ud fra siden.
+                    // Vi arbejder inden for den samme side, sï¿½ finder vi id ud fra siden.
 
                     $result = $db->query("SELECT id FROM redirect WHERE session_id = ".$db->quote($session_id, 'text')." AND ".$extra_db_condition." destination_url = ".$db->quote($this_uri, 'text')." ORDER BY date_created DESC");
                     if (PEAR::isError($result)) {
@@ -352,7 +352,7 @@ class Ilib_Redirect
                     }
                 } else {
                     // print("d");
-                    // Der er ikke sat et redirect_id, vi er ikke inden for samme side, så må det være et kald til siden som ikke benytter redirect. Vi sletter alle redirects til denne side.
+                    // Der er ikke sat et redirect_id, vi er ikke inden for samme side, sï¿½ mï¿½ det vï¿½re et kald til siden som ikke benytter redirect. Vi sletter alle redirects til denne side.
                     $reset = true;
                     $id = 0;
                 }
@@ -386,7 +386,7 @@ class Ilib_Redirect
      *
      * @return integer
      */
-    private private function load()
+    private function load()
     {
         $sql = "SELECT * FROM redirect
             WHERE session_id = ".$this->db->quote($this->session_id, 'text')." AND
@@ -594,7 +594,7 @@ class Ilib_Redirect
     private function reset()
     {
         if ($this->id == 0) {
-            // @todo Kan de nu også være rigtigt at den ikke kan slette hvor id er 0!
+            // @todo Kan de nu ogsï¿½ vï¿½re rigtigt at den ikke kan slette hvor id er 0!
             // trigger_error("id er ikke sat i Redirect->reset", E_USER_ERROR);
         }
 
