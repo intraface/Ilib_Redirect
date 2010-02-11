@@ -477,12 +477,12 @@ class Ilib_Redirect
         $destination_url = $this->parseUrl($destination_url);
 
         if (!$this->isUrlValid($destination_url)) {
-            trigger_error("First parameter in Redirect->setDestination needs to be the complete path", E_USER_ERROR);
+            trigger_error("First parameter ($destination_url) in Redirect->setDestination needs to be the complete path", E_USER_ERROR);
             return false;
         }
 
         if (!$this->isUrlValid($return_url)) {
-            trigger_error("Second parameter in Redirect->setDestination needs to be the complete path", E_USER_ERROR);
+            trigger_error("Second parameter ($return_url) in Redirect->setDestination needs to be the complete path", E_USER_ERROR);
             return false;
         }
 
