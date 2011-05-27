@@ -1,5 +1,6 @@
 <?php
 require_once dirname(__FILE__) . '/config.test.php';
+require_once '../src/Ilib/Redirect.php';
 require_once 'Ilib/ClassLoader.php';
 
 class RedirectTest extends PHPUnit_Framework_TestCase
@@ -9,14 +10,15 @@ class RedirectTest extends PHPUnit_Framework_TestCase
     private $get_vars = array();
     private $session_id;
     private $db;
+    protected $backupGlobals = false;
 
     function setUp()
     {
-        $this->db = MDB2::factory(TESTS_DB_DSN);
+        $this->db = MDB2::singleton(TESTS_DB_DSN);
         $this->db->setOption('portability', MDB2_PORTABILITY_NONE);
 
         if (PEAR::isError($this->db)) {
-            die($this->db->getUserInfo());
+            throw new Exception($this->db->getUserInfo());
         }
         $result = $this->db->exec('TRUNCATE redirect');
         $result = $this->db->exec('TRUNCATE redirect_parameter');
@@ -25,6 +27,7 @@ class RedirectTest extends PHPUnit_Framework_TestCase
         $this->session_id = 'dfj3id3jdi3kdo3kdo3kdo3kdo3';
 
         $_SERVER['REQUEST_URI'] = 'http://example.php/from.php';
+        $_SERVER['HTTP_HOST'] = 'http://localhost/';
     }
 
     function tearDown()
@@ -131,7 +134,7 @@ class RedirectTest extends PHPUnit_Framework_TestCase
         $this->assertTrue($redirect->setIdentifier('identifier1'));
     }
 
-    function testThisUri() 
+    function testThisUri()
     {
         $_SERVER['HTTPS']       = 'https://example.dk/index.php';
         $_SERVER['HTTP_HOST']   = 'example.dk';
@@ -467,7 +470,7 @@ class RedirectTest extends PHPUnit_Framework_TestCase
         unset($_SERVER['REQUEST_URI']);
     }
 
-    function testLoadRedirectWithSecondRedirectInBetween() 
+    function testLoadRedirectWithSecondRedirectInBetween()
     {
         // go
         $redirect = Ilib_Redirect::go($this->session_id, $this->db);
