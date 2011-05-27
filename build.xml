@@ -4,7 +4,7 @@
     <taskdef classname="phing.tasks.ext.IlibPearDeployerTask" name="peardeploy" />
 
     <property name="package-name" value="${phing.project.name}" />
-    <property name="version" value="0.2.1" />
+    <property name="version" value="0.2.2" />
     <property name="stability" value="alpha" />
     <property name="pear.channel" value="public.intraface.dk" />
 
@@ -44,7 +44,6 @@
             <summary>Easy redirect management</summary>
             <channel>${pear.channel}</channel>
             <description>
-                
                 This class makes it easy to make redirects
                 between pages and control where to go after
                 back again.
@@ -59,7 +58,7 @@
                 <pear minimum_version="1.6.0" recommended_version="1.6.1" />
             </dependencies>
             <notes>
-                * Now uses $_SERVER['REQUEST_URI'] instead of $_SERVER['SCRIPT_NAME'] to build url 
+                * Fixed bug with Multiple access type modifiers
             </notes>
         </d51pearpkg2>
     </target>
